@@ -1,10 +1,15 @@
 //db connections and models -Table definition
 const Sequelize=require("sequelize");
 
-const db=new Sequelize({
-    dialect:"sqlite",
-    storage:__dirname+"/database"
-});
+let db;
+if(process.env.DATABASE_URL){
+    db=new Sequelize(process.env.DATABASE_URL);
+}else{
+    db=new Sequelize({
+        dialect:"sqlite",
+        storage:__dirname+"/database"
+    });
+}
 const COL_ID_DEF={
     type:Sequelize.DataTypes.INTEGER,
     autoIncrement:true,
